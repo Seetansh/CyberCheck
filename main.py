@@ -47,6 +47,10 @@ def login():
 def register():
     return render_template('public/register.html')
 
+@app.route('/user_profile')
+def user_profile():
+    return "hello"
+
 @app.route('/scan', methods = ['POST', 'GET'])
 def scan():
 
