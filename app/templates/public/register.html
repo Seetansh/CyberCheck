@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block title %}CyberCheck{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid text-center my-5">
+    <h1 class="display-1">Register</h1>
+    <p class="fs-4">Create your account</p>
+</div>
+
+<div class="container d-flex justify-content-center my-5">
+    <div class="bg-secondary bg-opacity-50 p-4 rounded" style="width: 100%; max-width: 500px;">
+        <form id="registrationForm" onsubmit="validateForm(event)" action="/register" method="POST">
+            <!-- Hidden Auto-Increment ID -->
+            <!-- <input type="hidden" id="userId" name="userId" value="auto_increment"> -->
+
+            <div class="mb-3">
+                <label for="firstName" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name" name="name">
+                <div class="invalid-feedback">Error message here</div>
+                <div class="valid-feedback">Looks good!</div>
+
+            </div>
+
+            <div class="mb-3">
+                <label for="email" class="form-label">Email Address</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+
+                <div class="invalid-feedback">Error message here</div>
+                <div class="valid-feedback">Looks good!</div>
+
+            </div>
+
+            <div class="mb-3">
+                <label for="contact_number" class="form-label">Contact number</label>
+                <input type="number" class="form-control" id="contact_number" name="contact_number" required>
+
+                <div class="invalid-feedback">Error message here</div>
+                <div class="valid-feedback">Looks good!</div>
+
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+
+                <div class="invalid-feedback">Error message here</div>
+                <div class="valid-feedback">Looks good!</div>
+
+            </div>
+
+            <div class="mb-3">
+                <label for="confirmPassword" class="form-label">Confirm Password</label>
+                <input type="password" class="form-control" id="confirmPassword" name="confirm_password" required>
+
+                <div class="invalid-feedback">Error message here</div>
+                <div class="valid-feedback">Looks good!</div>
+
+            </div>
+
+            <!-- Custom CAPTCHA -->
+            <div class="mb-3 ">
+                <label class="form-label">Captcha</label>
+                <div class="d-flex align-items-center">
+                    <span id="captchaCode" class="me-3 fw-bold "></span>
+                    <button type="button" class="btn btn-outline-dark btn-sm"
+                        onclick="generateCaptcha()">Reload</button>
+                </div>
+                <input type="text" class="form-control mt-2" id="captchaInput" placeholder="Enter Captcha" required>
+                <small class="text-danger" id="captchaError"></small>
+                <input type="hidden" id="generatedCaptcha" name="generatedCaptcha">
+
+            </div>
+
+            <button type="submit" class="btn btn-dark w-100">Register</button>
+            <a href="/login" class="btn btn-dark w-100">Login</a>
+            <!-- Spacing issue -->
+        </form>
+    </div>
+</div>
+<script src="/static/js/validation.js"></script>
+
+{% endblock %}

@@ -1,0 +1,200 @@
+{% extends "base.html" %}
+{% block title %}Home - CyberCheck{% endblock %}
+
+{% block content %}
+<style>
+    /* Custom Animations */
+    @keyframes fadeInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-50px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    .hero-banner h1 {
+        font-size: 3rem;
+        animation: fadeInDown 1.5s;
+    }
+
+    .hero-banner p {
+        font-size: 1.2rem;
+        color: #e0e0e0;
+        animation: fadeIn 2s;
+    }
+
+    .steps-card {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        padding: 20px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        color: #e0e0e0;
+    }
+
+    .steps-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .steps-card h4 {
+        color: #ffffff;
+    }
+
+    .step-icon {
+        font-size: 3rem;
+        color: #5968ff;
+        margin-bottom: 15px;
+    }
+
+    body {
+        background: linear-gradient(135deg, #0a0f1e, #1a1f38);
+        color: #ffffff;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+        font-family: 'Merriweather', serif;
+        font-weight: bold;
+    }
+
+    .steps-section {
+        padding: 50px 0;
+    }
+
+    .steps-card {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        color: #e0e0e0;
+        position: relative;
+        overflow: hidden;
+        height: 150px;
+        /* Initial height for hover animation */
+    }
+
+    .steps-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3);
+        height: auto;
+        /* Expands to fit description */
+    }
+
+    .step-icon {
+        font-size: 3rem;
+        color: #5968ff;
+        margin-bottom: 10px;
+    }
+
+    .steps-card h4 {
+        color: #ffffff;
+        margin-bottom: 10px;
+    }
+
+    .step-description {
+        opacity: 0;
+        transform: translateY(-10px);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        font-size: 0.9rem;
+        color: #e0e0e0;
+        margin-top: 10px;
+        display: none;
+        /* Initially hidden */
+    }
+
+    .steps-card:hover .step-description {
+        opacity: 1;
+        transform: translateY(0);
+        display: block;
+        /* Shows description on hover */
+    }
+</style>
+<div class="container">
+    <div class="body-section">
+        <!-- Hero Section -->
+        <div class="hero-banner text-center py-5 mt-5">
+            <h1>CyberCheck</h1>
+            <p>Your trusted solution for Web vulnerability assessment.</p>
+            <!-- <form method="POST" action="/scan" class="mt-4 d-flex justify-content-center align-items-center">
+            <input type="url" name="url" class="form-control me-2" placeholder="Enter website URL" required
+                style="max-width: 400px; border-radius: 25px;">
+                <button type="submit" class="btn btn-primary px-4" style="border-radius: 25px;" onclick="">Start Free Scan</button>
+            
+        </form> -->
+            <a href="/trial_scanpage" class="btn btn-primary px-4" style="border-radius: 25px;">Start Scan</a>
+        </div>
+
+        <!-- How it Works Section -->
+        <section class="steps-section">
+            <div class="container">
+                <h2 class="text-center mb-5">How it Works</h2>
+                <div class="row justify-content-center text-center">
+                    <!-- Step 1 -->
+                    <div class="col-md-3 mb-4">
+                        <div class="steps-card">
+                            <i class="bi bi-globe step-icon"></i>
+                            <h4>Step 1</h4>
+                            <div class="step-description">
+                                Enter your Website URL to initiate the scanning process.
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Step 2 -->
+                    <div class="col-md-3 mb-4">
+                        <div class="steps-card">
+                            <i class="bi bi-shield-check step-icon"></i>
+                            <h4>Step 2</h4>
+                            <div class="step-description">
+                                Our algorithms will detect vulnerabilities like SQL Injection and XSS.
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Step 3 -->
+                    <div class="col-md-3 mb-4">
+                        <div class="steps-card">
+                            <i class="bi bi-file-earmark-text step-icon"></i>
+                            <h4>Step 3</h4>
+                            <div class="step-description">
+                                Get a detailed report highlighting detected vulnerabilities.
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Step 4 -->
+                    <div class="col-md-3 mb-4">
+                        <div class="steps-card">
+                            <i class="bi bi-tools step-icon"></i>
+                            <h4>Step 4</h4>
+                            <div class="step-description">
+                                Implement fixes using the recommendations provided in the report.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <div class="text-center py-4">
+            <p>It’s that easy! Start using <strong>CyberCheck</strong> now to secure your website.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

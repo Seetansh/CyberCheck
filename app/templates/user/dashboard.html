@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+
+{% block title %}User Dashboard - CyberCheck{% endblock %}
+
+{% block content %}
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+
+    }
+
+    .sidebar {
+        height: 100vh;
+        width: 250px;
+        position: fixed;
+        top: 56px;
+        /* Matches the height of the navbar */
+        left: 0;
+        background-color: #343a40;
+        color: white;
+        padding-top: 20px;
+        text-align: center;
+
+    }
+
+    .sidebar img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        margin-bottom: 10px;
+    }
+
+    .sidebar h4 {
+        margin-bottom: 5px;
+    }
+
+    .sidebar .profile-link {
+        font-size: 0.9rem;
+        color: #adb5bd;
+        text-decoration: none;
+        display: block;
+        margin-bottom: 20px;
+    }
+
+    .sidebar .profile-link:hover {
+        text-decoration: underline;
+    }
+
+    .sidebar a {
+        color: white;
+        text-decoration: none;
+        display: block;
+        padding: 10px 15px;
+    }
+
+    .sidebar a:hover {
+        background-color: #495057;
+    }
+
+    .content {
+        margin-left: 250px;
+        margin-top: 56px;
+        padding: 20px;
+    }
+</style>
+
+<!-- Sidebar -->
+<div class="sidebar">
+    {% if current_user.profile_picture == None %}
+    <img src="{{ url_for('static', filename='uploads/profile-pics/default.jpg')}}" alt="User Image">
+    {% else %}
+    <img src="{{ url_for('static', filename='uploads/profile_pics/' + current_user.profile_picture)}}" alt="User Image">
+    {% endif %}
+    <h4>{{user.name}}</h4>
+    <a href="{{url_for('user_profile')}}" class="profile-link">Click here to view profile</a>
+    {% if current_user.role == 'admin' %}
+    <a href="/admin">Admin Panel</a>
+    {% endif %}
+    <a href="{{url_for('index')}}">Home</a>
+    <a href="#">Reports</a>
+    <a href="#">Blogs</a>
+    <a href="#">News</a>
+    <a href="#">Settings</a>
+    <a href="#">Help</a>
+    <a href="/logout">Logout</a>
+</div>
+
+<div class="container">
+
+    <h2>Welcome, {{ user.name }}</h2>
+    <p>Here’s an overview of your account and recent activities:</p>
+    <div class="row">
+        <div class="col-md-4 me-2 mb-4 ">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Total Scans</h5>
+                    <p class="card-text" style="font-size: 72px;"><b>{{ total_scans }}</b></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4 p-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Start New Scan</h5>
+                    <p class="card-text">Scan your website for vulnerabilities now.</p>
+                    <a href="/scanpage" class="btn btn-success">Start Scan</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<hr>
+
+<div class="container mt-5">
+    <h1 class="mb-4">
+        Scan History
+    </h1>
+    <button type="button" onclick="toggleScanHistory()" class="btn btn-primary" style="cursor: pointer;">View Scan
+        History</button>
+    <table id="scanHistorySection" class="table table-striped" style="display: none;">
+        <thead>
+            <tr>
+                <th>Sno</th>
+                <th>Website URL</th>
+                <th>Scan Date & Time</th>
+                <th>Result</th>
+                <th>Time Taken (seconds)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if scan_history %}
+            {% for scan in scan_history %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ scan.website_url }}</td>
+                <td>{{ scan.scan_date_time }}</td>
+                <td>{{ scan.result }}</td>
+                <td>{{ scan.time_taken }}</td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr>
+                <td colspan="5" class="text-center">No scan history found</td>
+            </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function toggleScanHistory() {
+        const historySection = document.getElementById('scanHistorySection');
+        if (historySection.style.display === 'none') {
+            historySection.style.display = 'block';
+        } else {
+            historySection.style.display = 'none';
+        }
+    }
+</script>
+{% endblock %}
