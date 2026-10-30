@@ -11,7 +11,8 @@
 
 <div class="container d-flex justify-content-center my-5">
     <div class="bg-secondary bg-opacity-50 p-4 rounded" style="width: 100%; max-width: 400px;">
-        <form id="signInForm" action="/login" method="POST">
+        <form id="signInForm" action="{{ url_for('login') }}" method="POST">
+            {{ form.hidden_tag() }}
             <!-- Flash message -->
             {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
@@ -28,31 +29,25 @@
 
             <!-- Email Field -->
             <div class="mb-3">
-                <label for="email" class="form-label">Email Address</label>
-                <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" required>
+                {{ form.email.label("Email Address", class_="form-label") }}
+                {{ form.email(class_="form-control", autocomplete="email", aria_describedby="emailHelp") }}
                 <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                {% for error in form.email.errors %}
+                <div class="text-danger">{{ error }}</div>
+                {% endfor %}
             </div>
             <!-- Password Field -->
             <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" name="password" required>
+                {{ form.password.label(class_="form-label") }}
+                {{ form.password(class_="form-control", autocomplete="current-password") }}
+                {% for error in form.password.errors %}
+                <div class="text-danger">{{ error }}</div>
+                {% endfor %}
             </div>
             <!-- Remember Me -->
             <div class="mb-3 form-check">
                 <input type="checkbox" class="form-check-input" id="rememberMe" name="rememberMe">
                 <label class="form-check-label" for="rememberMe">Remember me</label>
-            </div>
-            <!-- Custom CAPTCHA -->
-            <div class="mb-3">
-                <label class="form-label">Captcha</label>
-                <div class="d-flex align-items-center">
-                    <span id="captchaCode" class="me-3 fw-bold " style="color:black"></span>
-                    <button type="button" class="btn btn-outline-dark btn-sm"
-                        onclick="generateCaptcha()">Reload</button>
-                </div>
-                <input type="text" class="form-control mt-2" id="captchaInput" name="captchaInput"
-                    placeholder="Enter Captcha" required>
-                <input type="hidden" id="generatedCaptcha" name="generatedCaptcha">
             </div>
             <!-- Submit Button -->
             <button type="submit" class="btn btn-dark w-100">Login</button>
