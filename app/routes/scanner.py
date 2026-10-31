@@ -1,4 +1,5 @@
-from flask import Flask, flash, render_template, request, jsonify, redirect
+from flask import Blueprint, request, jsonify, render_template
+from app.utils import is_valid_url
 from app.scanner_scripts import (
     scan_sql_injection,
     scan_xss,
@@ -10,11 +11,8 @@ from app.scanner_scripts import (
     scan_known_vulnerabilities,
     scan_insufficient_logging,
 )
-from app.forms import RegisterForm, LoginForm, ContactForm
-from app.utils import is_valid_url, convert_to_hash, check_hash
 
-app = Flask(__name__, template_folder='app/templates', static_folder='app/static')
-app.secret_key = 'secret_key_123'
+scanner_bp = Blueprint("scan", __name__)
 
 VULNERABILITY_SCANNERS = {
     "sql_injection": scan_sql_injection.scan_sql_injection,
@@ -28,75 +26,7 @@ VULNERABILITY_SCANNERS = {
     "insufficient_logging": scan_insufficient_logging.scan_insufficient_logging,
 }
 
-@app.route('/')
-def index():
-    return render_template('index.html')
-
-@app.route('/about')
-def about():
-    return render_template('public/about.html')
-
-@app.route('/contact', methods=['GET', 'POST'])
-def contact():
-    form = ContactForm()
-    if form.validate_on_submit():
-        flash("The form is valid, but message delivery is not configured yet.", "info")
-    return render_template('public/contact.html', form=form)
-
-
-# auth routes
-
-users = {}
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    form = LoginForm()
-    if form.validate_on_submit():
-        email= form.email.data
-        password = form.password.data
-        user = users.get(email.lower())
-        print(check_hash(password, user["email"]))
-        # if password == check_hash(password,user["password_hash"]) and email == user["email"]:
-        #     flash(f"Welcome Back {user["username"]}", "success")
-        #     return "Dashboard"
-        # else:
-        #     flash("Invalid Email or Password", "danger")
-    return render_template('public/login.html', form=form)
-
-@app.route('/register', methods=['GET', 'POST'])
-def register():
-    try:
-        form = RegisterForm()
-        if form.validate_on_submit():
-            username = form.username.data
-            email = form.email.data
-            password = convert_to_hash(form.password.data)
-            confirm_password = form.confirm_password.data
-
-            # db operations
-            # ----
-            users[email.lower()] = {
-                "email": email,
-                "username": username,
-                "password_hash": password,
-            }
-            flash(f"User {username} registered successfully!", "success")
-            return redirect('/login')
-    except Exception as e:
-        return jsonify({"status": "error", "message": str(e)}), 400
-    return render_template('public/register.html', form=form)
-
-
-# user routes
-@app.route('/dashboard')
-def dashboard():
-    return render_template('user/dashboard.html')
-
-@app.route('/user_profile')
-def user_profile():
-    return "hello"
-
-@app.route('/scan', methods = ['POST', 'GET'])
+@scanner_bp.route('/scan', methods = ['POST', 'GET'])
 def scan():
 
     try:
@@ -138,6 +68,3 @@ def scan():
         return jsonify({"status": "error", "message": str(e),}), 400 
        
     return render_template('public/trial_scanpage.html')
-
-if __name__ == '__main__':
-    app.run(host='localhost', port=5000, debug=True)

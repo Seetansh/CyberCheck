@@ -15,7 +15,7 @@
         {% endfor %}
         {% endwith %}
 
-        <form id="contactForm" action="{{ url_for('contact') }}" method="POST">
+        <form id="contactForm" action="{{ url_for('public.contact') }}" method="POST">
             {{ form.hidden_tag() }}
 
             <div class="mb-3">

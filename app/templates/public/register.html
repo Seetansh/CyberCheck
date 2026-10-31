@@ -11,7 +11,7 @@
 
 <div class="container d-flex justify-content-center my-5">
     <div class="bg-secondary bg-opacity-50 p-4 rounded" style="width: 100%; max-width: 500px;">
-        <form id="registrationForm" action="{{ url_for('register') }}" method="POST">
+        <form id="registrationForm" action="{{ url_for('auth.register') }}" method="POST">
             {{ form.hidden_tag() }}
 
             <div class="mb-3">
@@ -48,7 +48,7 @@
 
             <button type="submit" class="btn btn-dark w-100">Register</button>
             <br>
-            <a href="/login" class="btn btn-dark w-100">Login</a>
+            <a href="{{ url_for('auth.login') }}" class="btn btn-dark w-100">Login</a>
             <!-- Spacing issue -->
         </form>
     </div>

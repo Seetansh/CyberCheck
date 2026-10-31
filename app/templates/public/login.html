@@ -11,7 +11,7 @@
 
 <div class="container d-flex justify-content-center my-5">
     <div class="bg-secondary bg-opacity-50 p-4 rounded" style="width: 100%; max-width: 400px;">
-        <form id="signInForm" action="{{ url_for('login') }}" method="POST">
+        <form id="signInForm" action="{{ url_for('auth.login') }}" method="POST">
             {{ form.hidden_tag() }}
             <!-- Flash message -->
             {% with messages = get_flashed_messages(with_categories=true) %}
@@ -51,7 +51,7 @@
             </div>
             <!-- Submit Button -->
             <button type="submit" class="btn btn-dark w-100">Login</button>
-            <a href="/register" class="btn btn-dark w-100">Register</a>
+            <a href="{{ url_for('auth.register') }}" class="btn btn-dark w-100">Register</a>
         </form>
     </div>
 </div>
