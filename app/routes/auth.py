@@ -13,13 +13,15 @@ def login():
     if form.validate_on_submit():
         email= form.email.data
         password = form.password.data
-        user = users.get(email.lower())
-        print(check_hash(password, user["email"]))
-        # if password == check_hash(password,user["password_hash"]) and email == user["email"]:
-        #     flash(f"Welcome Back {user["username"]}", "success")
-        #     return "Dashboard"
-        # else:
-        #     flash("Invalid Email or Password", "danger")
+        user = users.get(email.lower(), None)
+        if user is None:
+            flash("No account found! Register first", "danger")
+            return redirect("/auth/register")
+        if check_hash(password,user["password_hash"]) and email.lower() == user["email"]:
+            flash(f"Welcome Back {user["username"]}", "success")
+            return "Dashboard"
+        else:
+            flash("Invalid Email or Password", "danger")
     return render_template('public/login.html', form=form)
 
 @auth_bp.route('/register', methods=['GET', 'POST'])
@@ -30,7 +32,7 @@ def register():
             username = form.username.data
             email = form.email.data
             password = convert_to_hash(form.password.data)
-            confirm_password = form.confirm_password.data
+            # confirm_password = form.confirm_password.data
 
             # db operations
             # ----

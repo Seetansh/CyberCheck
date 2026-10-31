@@ -9,5 +9,4 @@ def convert_to_hash(plain_text):
 
 def check_hash(plain_text, hashed_text):
     check = check_password_hash(hashed_text, plain_text)
-    print(check)
     return check
