@@ -12,6 +12,12 @@ class Scans(db.Model):
 
     vulnerabilities = db.relationship('Vulnerability', backref=db.backref('scan', lazy='select'), lazy='select')
 
+    def __init__(self, user_id, website_url, result, time_taken):
+        self.user_id = user_id
+        self.website_url = website_url
+        self.result = result
+        self.time_taken = time_taken
+
     def __repr__(self):
         return f'<Scan {self.scan_id} - User {self.user_id} - Website {self.website_url}>'
 

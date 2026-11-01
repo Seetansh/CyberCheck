@@ -22,7 +22,5 @@ class Users(db.Model):
         self.password = convert_to_hash(password)
         self.contact_number = contact_number
 
-        return {name, email, password, contact_number}
-
     def __repr__(self):
         return f'<User {self.name}>'

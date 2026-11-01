@@ -9,5 +9,10 @@ class Suggestions(db.Model):
     suggestion_text = db.Column(db.Text, nullable=False)
     created_at = db.Column(db.DateTime, nullable=False, server_default=db.func.now())
 
+    def __init__(self, vulnerability_id, suggestion_text):  
+        self.vulnerability_id = vulnerability_id
+        self.suggestion_text = suggestion_text
+        
+
     def __repr__(self):
         return f'<Suggestion {self.suggestion_id} - Vulnerability {self.vulnerability_id}>'
