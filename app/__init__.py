@@ -5,6 +5,8 @@ from app.config import(
     TestingConfig
 )
 from dotenv import load_dotenv
+from app.utils import check_hash, convert_to_hash
+from app.forms import LoginForm, RegisterForm
 from app.routes.auth import auth_bp
 from app.routes.public import public_bp
 from app.routes.scanner import scanner_bp

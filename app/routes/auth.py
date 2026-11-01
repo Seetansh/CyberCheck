@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, flash, redirect, jsonify
-from app.utils import check_hash, convert_to_hash
-from app.forms import LoginForm, RegisterForm
+from app import check_hash, convert_to_hash
+from app import LoginForm, RegisterForm
 
 
 auth_bp = Blueprint("auth", __name__)
