@@ -7,7 +7,7 @@ class Config:
 
     SECRET_KEY = os.getenv('SECRET_KEY')
 
-    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL", None)
+    SQLALCHEMY_DATABASE_URI = os.getenv("SQLALCHEMY_DATABASE_URI")
 
     SQLALCHEMY_TRACK_MODIFICATIONS = os.getenv('SQLALCHEMY_TRACK_MODIFICATIONS', False)
 
@@ -20,4 +20,3 @@ class ProductionConfig(Config):
 
 class TestingConfig(Config):
     TESTING = True
-

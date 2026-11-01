@@ -4,6 +4,7 @@ from app.config import(
     ProductionConfig,
     TestingConfig
 )
+from app.extensions import db, migrate
 from dotenv import load_dotenv
 from app.utils import check_hash, convert_to_hash
 from app.forms import LoginForm, RegisterForm
@@ -21,6 +22,12 @@ def create_app(configClass = DevelopmentConfig):
     app = Flask(__name__, template_folder='templates', static_folder='static')
     # loading configuration
     app.config.from_object(configClass)
+
+    db.init_app(app)
+    migrate.init_app(app, db)
+
+    # importing models because SQLAlchemy needs to know about them before migrations can detect your tables
+    from app import models
 
     # registering bp
     app.register_blueprint(auth_bp, url_prefix = '/auth')
